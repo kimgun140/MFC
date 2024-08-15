@@ -67,7 +67,7 @@ CMFCApplication3Dlg::CMFCApplication3Dlg(CWnd* pParent /*=nullptr*/) // 변수
 	, xpintX2_(0)
 	, ypintY2_(0)
 	, nRadius_(0)
-	, fm(0)
+	
 
 	, StaticXypos(0)
 {
@@ -403,6 +403,22 @@ void CMFCApplication3Dlg::OnBnClickedButton2() // LOAD
 	CString sPath = _T("C:\\adadasdd/");
 	dlg.m_ofn.lpstrInitialDir = sPath;
 	CString strPathName;
+
+
+	CFileFind file;
+	CString strFile = _T("*.*"); // 폴더 경로 
+	// 경로 폴더가 있다면 1, 없다면 0을 반환
+	
+	CString sDirName = _T("C:\\adadasdd/");
+	BOOL bResult = file.FindFile(sDirName + strFile);
+	if (!bResult) {
+		bResult = CreateDirectory(sDirName + "\\", NULL);
+
+
+
+	}
+
+
 	if (dlg.DoModal() == IDOK)
 	{
 		strPathName = dlg.GetPathName();
@@ -412,7 +428,7 @@ void CMFCApplication3Dlg::OnBnClickedButton2() // LOAD
 		}
 
 		m_image.Load(strPathName);
-		fm = (unsigned char*)m_image.GetBits();
+	
 		//cout << "nPitch1111111" << m_image.GetPitch() << endl;
 		UpdateDisplay();
 
@@ -458,7 +474,7 @@ void CMFCApplication3Dlg::OnBnClickedButton2() // LOAD
 	// 반지름 
 	cout << "xpos: " << xpos << "ypos: " << ypos << "radiuspos: " << radiuspos << endl;
 	//drawCircle(fm, xpos, ypos, nRadius, nGray);
-	drawX(fm, xpos + radiuspos, ypos + radiuspos, radiuspos);
+	drawX( xpos + radiuspos, ypos + radiuspos, radiuspos);
 
 	CString StaticXypos1;
 	StaticXypos1.Format(_T("(%d,%d)"), xpos, ypos);
@@ -470,7 +486,7 @@ void CMFCApplication3Dlg::OnBnClickedButton2() // LOAD
 
 }
 
-void CMFCApplication3Dlg::drawX(UCHAR* fm1, int x, int y, int radius) {
+void CMFCApplication3Dlg::drawX( int x, int y, int radius) {
 	int nPitch = m_image.GetPitch();
 	cout << "nPitch" << nPitch << endl;
 	cout << "X:" << x << "Y:" << y << endl;

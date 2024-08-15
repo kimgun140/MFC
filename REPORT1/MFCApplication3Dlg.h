@@ -52,8 +52,8 @@ public:
 	int nRadius_;
 	afx_msg void OnBnClickedButton2();
 	CString sPath;
-	void drawX(UCHAR* fm, int x, int y,int radius);
-	unsigned char* fm = (unsigned char*)m_image.GetBits();
+	void drawX( int x, int y,int radius);
+	//unsigned char* fm = (unsigned char*)m_image.GetBits();//
 
 	int StaticXypos;
 };
