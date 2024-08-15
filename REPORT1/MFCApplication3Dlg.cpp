@@ -195,7 +195,11 @@ void CMFCApplication3Dlg::OnBnClickedButtonMakecircle() // draw and save button
 	//int nHeight = 4;
 	int nBpp = 8; //그레이 레벨 비트 퍼 픽셀 
 	m_image.Create(nWidth, -nHeight, nBpp);// 영상을 만든다
+	if (m_image != NULL) {
+		m_image.Destroy();
+		m_image.Create(nWidth, -nHeight, nBpp);// 영상을 만든다
 
+	}
 	if (nBpp == 8)
 	{
 		static RGBQUAD rgb[256];//255니까
@@ -272,6 +276,18 @@ CString CMFCApplication3Dlg::GetSaveDataFileName(int x1, int y1, int nRadius)
 	//long nowTime = currentTimeMillis / 1000;
 
 	strTime.Format(_T("_%03d_%03d_%02d_%02d%02d_%02d%02d%02d%03d"), x1, y1, nRadius, t.GetMonth(), t.GetDay(), t.GetHour(), t.GetMinute(), t.GetSecond(), msc);
+	CFileFind file ;
+	CString strFile = _T("*.*"); // 폴더 경로 
+	// 경로 폴더가 있다면 1, 없다면 0을 반환
+	CString sDirName = _T("C:\\adadasdd/");
+	BOOL bResult = file.FindFile(sDirName + strFile);
+	if (!bResult) {
+		bResult = CreateDirectory(sDirName + "\\", NULL);
+	
+
+
+	}
+
 
 
 	return strPath + "C:\\adadasdd/" + strTime + ".jpg";
@@ -314,22 +330,6 @@ void CMFCApplication3Dlg::MoveRect() { // 첫번째 원 그리기 draw button
 
 
 
-
-
-
-//void CMFCApplication3Dlg::OnEnChangeEdit1Entertimes()
-//{
-//	CString times;
-//
-//	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-//	// CDialogEx::OnInitDialog() 함수를 재지정 
-//	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
-//	// 이 알림 메시지를 보내지 않습니다.
-//
-//	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
-//}
-
-
 void CMFCApplication3Dlg::OnBnClickedButtonDraw()
 {
 	MoveRect();
@@ -338,8 +338,7 @@ void CMFCApplication3Dlg::OnBnClickedButtonDraw()
 
 void CMFCApplication3Dlg::OnBnClickedButtonAction()// action
 {
-	// y좌표가 같으면 두번쨰 원이 계속 움직이네 
-	//ㄴㄴ 두번째 점의 xy좌표가 같으면 꼬이네 
+
 	UpdateData(TRUE);
 
 	srand(time(NULL));
